@@ -334,7 +334,7 @@ export class SelectComponent implements OnInit {
     if (!isUpMode && e.keyCode === 8) {
       let el:any = this.element.nativeElement
         .querySelector('div.ui-select-container > input');
-      if (!el.value || el.value.length > 0) {
+      if (!el.value || el.value.length <= 0) {
         if (this.active.length > 0) {
           this.remove(this.active[this.active.length - 1]);
         }
@@ -390,114 +390,116 @@ export class SelectComponent implements OnInit {
     }
     let target = e.target || e.srcElement;
     if (target && target.value) {
-      this.inputValue = target.value;
-      this.behavior.filter(new RegExp(escapeRegexp(this.inputValue), 'ig'));
-      this.doEvent('typed', this.inputValue);
-    }
-  }
+      window.setTimeout(() => {
+          this.inputValue = target.value;
+          this.behavior.filter(new RegExp(escapeRegexp(this.inputValue), 'ig'));
+          this.doEvent('typed', this.inputValue);
+	      });
+	    }
+	  }
 
-  public ngOnInit():any {
-    this.behavior = (this.firstItemHasChildren) ?
-      new ChildrenBehavior(this) : new GenericBehavior(this);
-  }
+	  public ngOnInit():any {
+	    this.behavior = (this.firstItemHasChildren) ?
+	      new ChildrenBehavior(this) : new GenericBehavior(this);
+	  }
 
-  public remove(item:SelectItem):void {
-    if (this._disabled === true) {
-      return;
-    }
-    if (this.multiple === true && this.active) {
-      let index = this.active.indexOf(item);
-      this.active.splice(index, 1);
-      this.data.next(this.active);
-      this.doEvent('removed', item);
-    }
-    if (this.multiple === false) {
-      this.active = [];
-      this.data.next(this.active);
-      this.doEvent('removed', item);
-    }
-  }
+	  public remove(item:SelectItem):void {
+	    if (this._disabled === true) {
+	      return;
+	    }
+	    if (this.multiple === true && this.active) {
+	      let index = this.active.indexOf(item);
+	      this.active.splice(index, 1);
+	      this.data.next(this.active);
+	      this.doEvent('removed', item);
+	    }
+	    if (this.multiple === false) {
+	      this.active = [];
+	      this.data.next(this.active);
+	      this.doEvent('removed', item);
+	    }
+	  }
 
-  public doEvent(type:string, value:any):void {
-    if ((this as any)[type] && value) {
-      (this as any)[type].next(value);
-    }
-  }
+	  public doEvent(type:string, value:any):void {
+	    if ((this as any)[type] && value) {
+	      (this as any)[type].next(value);
+	    }
+	  }
 
-  public clickedOutside():void {
-    this.inputMode = false;
-    this.optionsOpened = false;
-  }
+	  public clickedOutside():void {
+	    this.inputMode = false;
+	    this.optionsOpened = false;
+	  }
 
-  public get firstItemHasChildren():boolean {
-    return this.itemObjects[0] && this.itemObjects[0].hasChildren();
-  }
+	  public get firstItemHasChildren():boolean {
+	    return this.itemObjects[0] && this.itemObjects[0].hasChildren();
+	  }
 
-  protected matchClick(e:any):void {
-    if (this._disabled === true) {
-      return;
-    }
-    this.inputMode = !this.inputMode;
-    if (this.inputMode === true && ((this.multiple === true && e) || this.multiple === false)) {
-      this.focusToInput();
-      this.open();
-    }
-  }
+	  protected matchClick(e:any):void {
+	    if (this._disabled === true) {
+	      return;
+	    }
+	    this.inputMode = !this.inputMode;
+	    if (this.inputMode === true && ((this.multiple === true && e) || this.multiple === false)) {
+	      this.focusToInput();
+	      this.open();
+	    }
+	  }
 
-  protected  mainClick(event:any):void {
-    if (this.inputMode === true || this._disabled === true) {
-      return;
-    }
-    if (event.keyCode === 46) {
-      event.preventDefault();
-      this.inputEvent(event);
-      return;
-    }
-    if (event.keyCode === 8) {
-      event.preventDefault();
-      this.inputEvent(event, true);
-      return;
-    }
-    if (event.keyCode === 9 || event.keyCode === 13 ||
-      event.keyCode === 27 || (event.keyCode >= 37 && event.keyCode <= 40)) {
-      event.preventDefault();
-      return;
-    }
-    this.inputMode = true;
-    let value = String
-      .fromCharCode(96 <= event.keyCode && event.keyCode <= 105 ? event.keyCode - 48 : event.keyCode)
-      .toLowerCase();
-    this.focusToInput(value);
-    this.open();
-    let target = event.target || event.srcElement;
-    target.value = value;
-    this.inputEvent(event);
-  }
+	  protected  mainClick(event:any):void {
+	    if (this.inputMode === true || this._disabled === true) {
+	      return;
+	    }
+	    if (event.keyCode === 46) {
+	      event.preventDefault();
+	      this.inputEvent(event);
+	      return;
+	    }
+	    if (event.keyCode === 8) {
+	      event.preventDefault();
+	      this.inputEvent(event, true);
+	      return;
+	    }
+	    if (event.keyCode === 9 || event.keyCode === 13 ||
+	      event.keyCode === 27 || (event.keyCode >= 37 && event.keyCode <= 40)) {
+	      event.preventDefault();
+	      return;
+	    }
+	    this.inputMode = true;
+	    let value = String
+	      .fromCharCode(96 <= event.keyCode && event.keyCode <= 105 ? event.keyCode - 48 : event.keyCode)
+	      .toLowerCase();
+	    this.focusToInput(value);
+	    this.open();
+	    let target = event.target || event.srcElement;
+	    target.value = value;
+	    this.inputEvent(event);
+	  }
 
-  protected  selectActive(value:SelectItem):void {
-    this.activeOption = value;
-  }
+	  protected  selectActive(value:SelectItem):void {
+	    this.activeOption = value;
+	  }
 
-  protected  isActive(value:SelectItem):boolean {
-    return this.activeOption.text === value.text;
-  }
+	  protected  isActive(value:SelectItem):boolean {
+	    return this.activeOption.text === value.text;
+	  }
 
-  private focusToInput(value:string = ''):void {
-    setTimeout(() => {
-      let el = this.element.nativeElement.querySelector('div.ui-select-container > input');
-      if (el) {
-        el.focus();
-        el.value = value;
-      }
-    }, 0);
-  }
+	  private focusToInput(value:string = ''):void {
+	    setTimeout(() => {
+	      let el = this.element.nativeElement.querySelector('div.ui-select-container > input');
+	      if (el) {
+		el.focus();
+		el.value = value;
+	      }
+	    }, 0);
+	  }
 
-  private open():void {
-    this.options = this.itemObjects
-      .filter((option:SelectItem) => (this.multiple === false ||
-      this.multiple === true && !this.active.find((o:SelectItem) => option.text === o.text)));
+	  private open():void {
+	    this.options = this.itemObjects
+	      .filter((option:SelectItem) => (this.multiple === false ||
+	      this.multiple === true && !this.active.find((o:SelectItem) => option.text === o.text)));
 
-    if (this.options.length > 0) {
+	    if (this.options.length > 0) {
       this.behavior.first();
     }
     this.optionsOpened = true;
