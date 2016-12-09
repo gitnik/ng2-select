@@ -1,3 +1,8 @@
+<a name="1.1.4"></a>
+## [1.1.4](https://github.com/valor-software/ng2-select/compare/v1.1.3...v1.1.4) (2016-12-09)
+
+
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/valor-software/ng2-select/compare/v1.1.2...v1.1.3) (2016-12-09)
 
