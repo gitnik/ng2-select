@@ -336,7 +336,7 @@ export class SelectComponent implements OnInit {
     if (!isUpMode && e.keyCode === 8) {
       let el:any = this.element.nativeElement
         .querySelector('div.ui-select-container > input');
-      if (!el.value || el.value.length <= 0 && this.backspaceClearsSelection) {
+      if ((!el.value || el.value.length <= 0) && this.backspaceClearsSelection) {
         if (this.active.length > 0) {
           this.remove(this.active[this.active.length - 1]);
         }
