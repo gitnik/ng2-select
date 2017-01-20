@@ -133,7 +133,7 @@ let styles = `
            [disabled]="disabled"
            class="form-control ui-select-search"
            *ngIf="inputMode"
-           placeholder="{{active.length <= 0 ? placeholder : ''}}">
+           placeholder="{{active.length <= 0 ? inputPlaceholder : ''}}">
      <!-- options template -->
      <ul *ngIf="optionsOpened && options && options.length > 0 && !firstItemHasChildren"
           class="ui-select-choices dropdown-menu" role="menu">
@@ -199,7 +199,7 @@ let styles = `
            autocapitalize="off"
            spellcheck="false"
            class="form-control ui-select-search"
-           placeholder="{{active.length <= 0 ? placeholder : ''}}"
+           placeholder="{{active.length <= 0 ? inputPlaceholder : ''}}"
            role="combobox">
      <!-- options template -->
      <ul *ngIf="optionsOpened && options && options.length > 0 && !firstItemHasChildren"
@@ -240,6 +240,7 @@ let styles = `
 export class SelectComponent implements OnInit {
   @Input() public allowClear:boolean = false;
   @Input() public placeholder:string = '';
+  @Input() public inputPlaceholder:string = '';
   @Input() public idField:string = 'id';
   @Input() public textField:string = 'text';
   @Input() public multiple:boolean = false;
