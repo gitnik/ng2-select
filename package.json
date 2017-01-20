@@ -1,6 +1,6 @@
 {
   "name": "@gitnik/ng2-select",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "description": "Angular2 based replacement for select boxes",
   "scripts": {
     "flow.compile": "npm run flow.compile:common && npm run flow.compile:system",
