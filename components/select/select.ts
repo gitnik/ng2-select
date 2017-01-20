@@ -241,6 +241,7 @@ export class SelectComponent implements OnInit {
   @Input() public allowClear:boolean = false;
   @Input() public placeholder:string = '';
   @Input() public inputPlaceholder:string = '';
+  @Input() public backspaceClearsSelection = false;
   @Input() public idField:string = 'id';
   @Input() public textField:string = 'text';
   @Input() public multiple:boolean = false;
@@ -335,7 +336,7 @@ export class SelectComponent implements OnInit {
     if (!isUpMode && e.keyCode === 8) {
       let el:any = this.element.nativeElement
         .querySelector('div.ui-select-container > input');
-      if (!el.value || el.value.length <= 0) {
+      if (!el.value || el.value.length <= 0 && backspaceClearsSelection) {
         if (this.active.length > 0) {
           this.remove(this.active[this.active.length - 1]);
         }
