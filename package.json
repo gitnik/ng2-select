@@ -1,6 +1,6 @@
 {
   "name": "@gitnik/ng2-select",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Angular2 based replacement for select boxes",
   "scripts": {
     "flow.compile": "npm run flow.compile:common && npm run flow.compile:system",
@@ -47,10 +47,10 @@
   },
   "homepage": "https://github.com/valor-software/ng2-select#readme",
   "peerDependencies": {
-    "@angular/common": "~2",
-    "@angular/compiler": "~2",
-    "@angular/core": "~2",
-    "@angular/forms": "~2"
+    "@angular/common": "*",
+    "@angular/compiler": "*",
+    "@angular/core": "*",
+    "@angular/forms": "*"
   },
   "dependencies": {},
   "devDependencies": {
